@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import "./App.css";
+import "semantic-ui-css/semantic.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Welcome from "./components/Welcome";
+import FlatList from "./components/FlatList";
+import FlatShow from "./components/FlatShow";
+import SignInForm from "./components/SignInForm";
+import SignUpForm from "./components/SignUpForm";
+import FavouritesList from "./components/FavouritesList";
+import BookingsList from "./components/BookingsList";
+import Admin from "./components/Admin";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Route exact path="/" render={() => <Welcome />} />
+        <Route exact path="/flats" component={() => <FlatList />} />
+        <Route exact path="/sign-in" component={() => <SignInForm />} />
+        <Route exact path="/sign-up" component={() => <SignUpForm />} />
+        <Route exact path="/favourites" component={() => <FavouritesList />} />
+        <Route exact path="/bookings" component={() => <BookingsList />} />
+        <Route exact path="/flats/show" component={FlatShow} />
+        <Route exact path="/admin" component={Admin} />
+        {/* <div className="NavBar">
+          <NavBar />
+        </div> */}
+      </div>
+    );
+  }
 }
 
 export default App;
