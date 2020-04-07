@@ -8,13 +8,15 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Link } from "react-router-dom";
 
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
+import { Button } from "semantic-ui-react";
 
 class PropertyShow extends React.Component {
   state = {
-    property: null
+    property: null,
+    startDate: null,
+    endDate: null
   };
 
   imgs = [
@@ -23,6 +25,13 @@ class PropertyShow extends React.Component {
     "https://react.semantic-ui.com/images/avatar/large/molly.png",
     "https://react.semantic-ui.com/images/avatar/large/jenny.jpg"
   ];
+
+  setDates = (startDate, endDate) => {
+    this.setState({
+      startDate,
+      endDate
+    });
+  };
 
   componentDidMount() {
     api
@@ -79,11 +88,7 @@ class PropertyShow extends React.Component {
 
         <div>
           <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>Basic</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -94,11 +99,7 @@ class PropertyShow extends React.Component {
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>Dining</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -112,11 +113,7 @@ class PropertyShow extends React.Component {
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>Bed and Bath</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -132,7 +129,26 @@ class PropertyShow extends React.Component {
           </ExpansionPanel>
         </div>
 
-        <Calendar bookings={property.bookings} />
+        <Calendar
+          bookings={property.bookings}
+          id={this.props.match.params.id}
+          setDates={this.setDates}
+        />
+        <Button
+          as={Link}
+          to={
+            "/properties/" +
+            this.props.match.params.id +
+            "/book/" +
+            this.state.startDate +
+            "/" +
+            this.state.endDate
+          }
+        >
+          make a booking
+        </Button>
+
+        <NavBar />
       </div>
     );
   }

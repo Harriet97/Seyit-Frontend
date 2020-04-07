@@ -10,7 +10,7 @@ import NavBar from "./Navbar";
 
 class SignInForm extends React.Component {
   state = {
-    username: "",
+    email: "",
     password: ""
   };
 

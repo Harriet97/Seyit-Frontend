@@ -5,24 +5,51 @@ import SignInForm from "../common/SignInForm";
 import SignUpForm from "../common/SignUpForm";
 import FavouritesList from "../favourite/FavouritesList";
 import BookingsList from "../booking/BookingsList";
+import BookingForm from "../booking/BookingForm";
 import PropertyShow from "../property/PropertyShow";
 import Welcome from "../common/Welcome";
+import api from "../../api";
 
 class Guest extends React.Component {
   state = {
     user: null
   };
 
-  signin = user => {
-    // fetch().then().then()
-    this.setState({
-      user: {
-        ...user,
-        id: 1
-      }
-    });
+  componentDidMount() {
+    this.validateUser();
+  }
 
-    this.props.history.push("/properties");
+  validateUser = () => {
+    api.guestsValidate().then(data => {
+      this.setState({
+        user: data
+      });
+    });
+  };
+
+  signin = user => {
+    api.guestSignIn(user).then(user => {
+      this.setState(
+        {
+          user: {
+            ...user
+          }
+        },
+        () => {
+          this.props.history.push("/properties");
+        }
+      );
+    });
+  };
+
+  makeBooking = deets => {
+    let bookingObj = {
+      start_date: deets.start_date,
+      end_date: deets.end_date,
+      property_id: deets.id,
+      user: this.state.user.id
+    };
+    api.makeBooking(bookingObj).then(json => console.log(json));
   };
 
   render() {
@@ -39,6 +66,11 @@ class Guest extends React.Component {
         <Route exact path="/favourites" component={() => <FavouritesList />} />
         <Route exact path="/bookings" component={() => <BookingsList />} />
         <Route exact path="/properties/:id" component={PropertyShow} />
+        <Route
+          exact
+          path="/properties/:id/book/:start_date/:end_date"
+          component={BookingForm}
+        />
       </Switch>
     );
   }

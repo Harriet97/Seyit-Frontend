@@ -22,13 +22,8 @@ class Calendar extends Component {
     return bookedRanges.find(range => range.contains(date));
   };
 
-  alertStartDate = () => {
-    alert(this.state.startDate);
-    console.log(this.state.startDate._d);
-  };
-  alertEndDate = () => {
-    alert(this.state.endDate);
-    console.log(this.state.startDate._d);
+  setDates = () => {
+    this.props.setDates(this.state.startDate._d, this.state.endDate._d);
   };
   render() {
     return (
@@ -47,13 +42,13 @@ class Calendar extends Component {
           endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
           onDatesChange={({ startDate, endDate }) =>
             this.setState({ startDate, endDate })
-          } // PropTypes.func.isRequired,
+          }
           focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-          onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+          onFocusChange={focusedInput => this.setState({ focusedInput })}
         />
         <br></br>
-        {/* <button onClick={this.alertStartDate}>Click me for start date</button> */}
-        {/* <button onClick={this.alertEndDate}>Click me for end date</button> */}
+
+        <button onClick={this.setDates}>Confirm dates</button>
       </div>
     );
   }

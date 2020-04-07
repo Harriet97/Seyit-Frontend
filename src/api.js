@@ -1,5 +1,7 @@
 const baseURL = "http://localhost:3000";
 const signInURL = `${baseURL}/sign-in`;
+const guestsSignInURL = `${baseURL}/guests/sign-in`;
+const guestsValidateUrl = `${baseURL}/guests/validate`;
 const signUpURL = `${baseURL}/users`;
 const validateURL = `${baseURL}/validate`;
 const propertiesURL = `${baseURL}/properties`;
@@ -16,7 +18,7 @@ const getProperty = id => {
 const getProperties = () => fetch(propertiesURL).then(jsonify);
 
 const get = (url, token) => {
-  return token ? fetch(url, { headers: { AUTHORIZATION: token } }) : fetch(url);
+  return token ? fetch(url, { headers: { Authorization: token } }) : fetch(url);
 };
 
 const post = (url, data) => {
@@ -34,17 +36,22 @@ const post = (url, data) => {
 const signUp = body => {
   return post(signUpURL, body).then(resp => resp.json());
 };
-const signIn = data => {
-  return post(signInURL, data).then(jsonify);
+const guestSignIn = data => {
+  return post(guestsSignInURL, data)
+    .then(jsonify)
+    .then(data => {
+      if (data.token) localStorage.token = data.token;
+      return data;
+    });
 };
-const validate = token => {
-  return get(validateURL, token).then(jsonify);
+const guestsValidate = () => {
+  return get(guestsValidateUrl, localStorage.token).then(jsonify);
 };
 
 export default {
   signUp,
-  signIn,
-  validate,
+  guestSignIn,
+  guestsValidate,
   getProperties,
   getProperty
 };
