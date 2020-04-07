@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../api";
+
 import { Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import TextField from "@material-ui/core/TextField";
@@ -74,9 +74,6 @@ class SignInForm extends React.Component {
             <h4>
               New to us?<Link to="/sign-up"> Sign Up </Link>
             </h4>
-            <h5>
-              <Link to="/admin"> admin </Link>
-            </h5>
           </div>
         </Container>
         <div className="NavBar">

@@ -9,13 +9,13 @@ class Welcome extends React.Component {
     return (
       <div className="App-header">
         <HomeWorkOutlinedIcon fontSize="large" className="App-logo" />
-        <h1>Seyit's Flats</h1>
+        <h1>Seyit's Properties</h1>
 
         <h2>Rent furnished apartments</h2>
         <h4>Easy and convenient – Housing as a Service</h4>
         <br></br>
-        <Button className="explore" as={Link} to={`/flats`}>
-          Explore our flats
+        <Button className="explore" as={Link} to={`/properties`}>
+          Explore our properties
         </Button>
       </div>
     );

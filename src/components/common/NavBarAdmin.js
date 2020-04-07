@@ -48,10 +48,10 @@ class NavBarAdmin extends React.Component {
         }}
       >
         <BottomNavigationAction
-          label="my flats"
-          value="my flats"
+          label="my properties"
+          value="my properties"
           icon={
-            <Link to="/flats">
+            <Link to="/properties">
               <LocalHotel />
             </Link>
           }
@@ -59,7 +59,7 @@ class NavBarAdmin extends React.Component {
         />
         <BottomNavigationAction
           label="new"
-          value="add a flat"
+          value="add a property"
           icon={
             <Link to="/bookings">
               <LocalHotel />

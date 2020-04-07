@@ -2,7 +2,13 @@
   /* text-align: center; */
   /* padding-top: 1em; */
   background-color: white;
-  padding-bottom: 4em;
+  padding-bottom: 2em;
+  padding-top: 1em;
+  font-family: "Roboto", sans-serif;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
 }
 
 .App-logo {
@@ -19,6 +25,7 @@
   justify-content: center;
   /* font-size: calc(10px + 2vmin); */
   color: #3b5998;
+  font-family: "Roboto", sans-serif;
 }
 
 .NavBar {
@@ -27,6 +34,18 @@
   width: 100%;
   max-height: fit-content;
   z-index: 5;
+  background-color: whitesmoke;
+  font-family: "Roboto", sans-serif;
+}
+
+.NavBarTop {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-height: fit-content;
+  z-index: 5;
+  background-color: whitesmoke;
+  font-family: "Roboto", sans-serif;
 }
 
 .form {
@@ -36,6 +55,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: "Roboto", sans-serif;
 }
 
 .container {
@@ -45,4 +65,5 @@
   align-items: center;
   justify-content: space-around;
   text-align: right;
+  font-family: "Roboto", sans-serif;
 }

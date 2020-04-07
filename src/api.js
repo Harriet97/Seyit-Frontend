@@ -10,24 +10,10 @@ const addProperty = body => {
 };
 
 const getProperty = id => {
-  return fetch(`${propertiesURL}${id}`, {
-    method: "GET",
-    headers: {
-      "user-key": "ab7bd7822dfc651cfa6f0b4f23152241"
-    }
-  }).then(jsonify);
+  return fetch(`${propertiesURL}/${id}`).then(jsonify);
 };
 
-const destroyFavourite = data => {
-  return fetch(`${removeFavURL}`, {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
-};
+const getProperties = () => fetch(propertiesURL).then(jsonify);
 
 const get = (url, token) => {
   return token ? fetch(url, { headers: { AUTHORIZATION: token } }) : fetch(url);
@@ -58,5 +44,7 @@ const validate = token => {
 export default {
   signUp,
   signIn,
-  validate
+  validate,
+  getProperties,
+  getProperty
 };

@@ -15,39 +15,11 @@ class Calendar extends Component {
   };
 
   isBlocked = date => {
-    let bookings = [
-      {
-        startDate: "Fri Apr 03 2020 12:00:00 GMT+0100",
-        endDate: "Sun May 03 2020 12:00:00 GMT+0100",
-        guest_id: 3,
-        property_id: 2
-      },
-      {
-        startDate: "Tue May 12 2020 12:00:00 GMT+0100",
-        endDate: "Thu Jun 11 2020 12:00:00 GMT+0100",
-        guest_id: 2,
-        property_id: 2
-      },
-      {
-        startDate: "Fri Jun 19 2020 12:00:00 GMT+0100",
-        endDate: "Sun Jul 19 2020 12:00:00 GMT+0100",
-        guest_id: 4,
-        property_id: 2
-      }
-    ];
+    let bookedRanges = this.props.bookings.map(booking =>
+      moment.range(booking.startDate, booking.endDate)
+    );
 
-    let bookedRanges = [];
-
-    bookings.map(booking => {
-      bookedRanges = [
-        ...bookedRanges,
-        moment.range(booking.startDate, booking.endDate)
-      ];
-    });
-
-    let blocked;
-    blocked = bookedRanges.find(range => range.contains(date));
-    return blocked;
+    return bookedRanges.find(range => range.contains(date));
   };
 
   alertStartDate = () => {
@@ -63,8 +35,10 @@ class Calendar extends Component {
       <div className="App">
         <DateRangePicker
           orientation="vertical"
-          withFullScreenPortal="true"
           numberOfMonths="2"
+          block="true"
+          openDirection="up"
+          // withFullScreenPortal="true"
           minimumNights="30"
           isDayBlocked={this.isBlocked}
           startDate={this.state.startDate} // momentPropTypes.momentObj or null,
