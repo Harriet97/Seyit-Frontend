@@ -8,15 +8,10 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Link } from "react-router-dom";
-
-import { Button } from "semantic-ui-react";
 
 class PropertyShow extends React.Component {
   state = {
-    property: null,
-    startDate: null,
-    endDate: null
+    property: null
   };
 
   imgs = [
@@ -25,13 +20,6 @@ class PropertyShow extends React.Component {
     "https://react.semantic-ui.com/images/avatar/large/molly.png",
     "https://react.semantic-ui.com/images/avatar/large/jenny.jpg"
   ];
-
-  setDates = (startDate, endDate) => {
-    this.setState({
-      startDate,
-      endDate
-    });
-  };
 
   componentDidMount() {
     api
@@ -60,9 +48,7 @@ class PropertyShow extends React.Component {
         <h4>
           {property.location}, {property.postcode}
         </h4>
-
         <h2>About this space</h2>
-
         <h4>
           {property.sleeps} guests • {property.bedrooms} bedrooms •{" "}
           {property.bathrooms} bathroom
@@ -73,19 +59,15 @@ class PropertyShow extends React.Component {
         {property.living_room && property.balcony ? (
           <h5>with living room and balcony</h5>
         ) : null}
-
         {!property.living_room && property.balcony ? (
           <h5> with balcony</h5>
         ) : null}
-
         <h4>
           {property.bathtub ? "bath" : null}
           {property.shower ? "shower" : null}
         </h4>
         <br></br>
-
         <h2>Ammenities:</h2>
-
         <div>
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -132,22 +114,7 @@ class PropertyShow extends React.Component {
         <Calendar
           bookings={property.bookings}
           id={this.props.match.params.id}
-          setDates={this.setDates}
         />
-        <Button
-          as={Link}
-          to={
-            "/properties/" +
-            this.props.match.params.id +
-            "/book/" +
-            this.state.startDate +
-            "/" +
-            this.state.endDate
-          }
-        >
-          make a booking
-        </Button>
-
         <NavBar />
       </div>
     );
@@ -155,7 +122,3 @@ class PropertyShow extends React.Component {
 }
 
 export default PropertyShow;
-
-{
-  /* <Calendar bookings={property.bookings} /> */
-}

@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
-
+import { Button } from "semantic-ui-react";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
-
+import { Link } from "react-router-dom";
 const moment = extendMoment(Moment);
 
 class Calendar extends Component {
@@ -22,9 +22,6 @@ class Calendar extends Component {
     return bookedRanges.find(range => range.contains(date));
   };
 
-  setDates = () => {
-    this.props.setDates(this.state.startDate._d, this.state.endDate._d);
-  };
   render() {
     return (
       <div className="App">
@@ -48,7 +45,19 @@ class Calendar extends Component {
         />
         <br></br>
 
-        <button onClick={this.setDates}>Confirm dates</button>
+        <Button
+          as={Link}
+          to={
+            "/properties/" +
+            this.props.id +
+            "/book/" +
+            this.state.startDate +
+            "/" +
+            this.state.endDate
+          }
+        >
+          make a booking
+        </Button>
       </div>
     );
   }

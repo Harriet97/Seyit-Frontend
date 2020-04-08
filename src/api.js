@@ -1,10 +1,12 @@
 const baseURL = "http://localhost:3000";
 const signInURL = `${baseURL}/sign-in`;
 const guestsSignInURL = `${baseURL}/guests/sign-in`;
-const guestsValidateUrl = `${baseURL}/guests/validate`;
+const guestsValidateURL = `${baseURL}/guests/validate`;
 const signUpURL = `${baseURL}/users`;
 const validateURL = `${baseURL}/validate`;
 const propertiesURL = `${baseURL}/properties`;
+const bookingURL = `${baseURL}/bookings`;
+const guestBookingURL = `${baseURL}/guests`;
 const jsonify = response => response.json();
 
 const addProperty = body => {
@@ -16,6 +18,14 @@ const getProperty = id => {
 };
 
 const getProperties = () => fetch(propertiesURL).then(jsonify);
+
+const makeBooking = bookingObj => {
+  return post(bookingURL, bookingObj);
+};
+
+const getBookings = id => {
+  return fetch(`${guestBookingURL}/${id}/bookings`).then(jsonify);
+};
 
 const get = (url, token) => {
   return token ? fetch(url, { headers: { Authorization: token } }) : fetch(url);
@@ -45,7 +55,7 @@ const guestSignIn = data => {
     });
 };
 const guestsValidate = () => {
-  return get(guestsValidateUrl, localStorage.token).then(jsonify);
+  return get(guestsValidateURL, localStorage.token).then(jsonify);
 };
 
 export default {
@@ -53,5 +63,7 @@ export default {
   guestSignIn,
   guestsValidate,
   getProperties,
-  getProperty
+  getProperty,
+  makeBooking,
+  getBookings
 };

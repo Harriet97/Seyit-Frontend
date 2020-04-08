@@ -1,12 +1,9 @@
 import React from "react";
 import NavBar from "../common/Navbar";
 import PropertyListTile from "./PropertyListTile";
-import Search from "./Search";
-
 import Fab from "@material-ui/core/Fab";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import { Card } from "semantic-ui-react";
-import Calendar from "./Calendar";
 import api from "../../api";
 
 class PropertyList extends React.Component {
@@ -22,8 +19,6 @@ class PropertyList extends React.Component {
     return (
       <div>
         <h1>All of the properties</h1>
-        {/* <Calendar /> */}
-        {/* <Search /> */}
         <Card.Group itemsPerRow={1}>
           {this.state.properties.map(property => (
             <PropertyListTile property={property} />

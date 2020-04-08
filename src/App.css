@@ -67,3 +67,7 @@
   text-align: right;
   font-family: "Roboto", sans-serif;
 }
+
+table {
+  width: 100%;
+}

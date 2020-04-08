@@ -44,11 +44,12 @@ class Guest extends React.Component {
 
   makeBooking = deets => {
     let bookingObj = {
-      start_date: deets.start_date,
-      end_date: deets.end_date,
+      startDate: deets.start_date,
+      endDate: deets.end_date,
       property_id: deets.id,
-      user: this.state.user.id
+      guest_id: this.state.user.id
     };
+    console.log(bookingObj);
     api.makeBooking(bookingObj).then(json => console.log(json));
   };
 
@@ -64,12 +65,22 @@ class Guest extends React.Component {
         />
         <Route exact path="/sign-up" component={() => <SignUpForm />} />
         <Route exact path="/favourites" component={() => <FavouritesList />} />
-        <Route exact path="/bookings" component={() => <BookingsList />} />
+        <Route
+          exact
+          path="/bookings"
+          render={props => <BookingsList {...props} guest={this.state.user} />}
+        />
         <Route exact path="/properties/:id" component={PropertyShow} />
         <Route
           exact
           path="/properties/:id/book/:start_date/:end_date"
-          component={BookingForm}
+          render={props => (
+            <BookingForm
+              {...props}
+              user={this.state.user}
+              makeBooking={this.makeBooking}
+            />
+          )}
         />
       </Switch>
     );
