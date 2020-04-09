@@ -23,6 +23,19 @@ class Calendar extends Component {
   };
 
   render() {
+    let bookingLink = "";
+
+    if (this.state.startDate && this.state.endDate) {
+      bookingLink =
+        "/properties/" +
+        this.props.id +
+        "/book/" +
+        this.state.startDate.format("YYYY-MM-DD") +
+        "/" +
+        this.state.endDate.format("YYYY-MM-DD");
+    }
+
+    console.log("bookinglink", bookingLink);
     return (
       <div className="App">
         <DateRangePicker
@@ -45,17 +58,7 @@ class Calendar extends Component {
         />
         <br></br>
 
-        <Button
-          as={Link}
-          to={
-            "/properties/" +
-            this.props.id +
-            "/book/" +
-            this.state.startDate +
-            "/" +
-            this.state.endDate
-          }
-        >
+        <Button as={Link} to={bookingLink}>
           make a booking
         </Button>
       </div>

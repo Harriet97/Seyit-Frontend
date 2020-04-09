@@ -7,6 +7,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
+import { Button } from "semantic-ui-react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 class PropertyShow extends React.Component {
@@ -110,6 +111,9 @@ class PropertyShow extends React.Component {
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
+        <Button onClick={() => this.props.makeFavourite(property)}>
+          favourite
+        </Button>
 
         <Calendar
           bookings={property.bookings}

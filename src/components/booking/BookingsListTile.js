@@ -1,9 +1,12 @@
 import React from "react";
-import NavBar from "../common/Navbar";
+import { Card, Carousel } from "react-bootstrap";
+import moment from "moment";
 import api from "../../api";
-import { Carousel } from "react-bootstrap";
+import { Button, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import NavBar from "../common/Navbar";
 
-class PropertyShow extends React.Component {
+class BookingsListTile extends React.Component {
   state = {
     property: null
   };
@@ -17,36 +20,45 @@ class PropertyShow extends React.Component {
 
   componentDidMount() {
     api
-      .getProperty(this.props.match.params.id)
+      .getProperty(this.props.booking.property_id)
       .then(property => this.setState({ property }));
   }
 
   render() {
     if (!this.state.property) return <div>Loading</div>;
-    const { property } = this.state;
     return (
       <div className="App">
         <div className="NavBarTop">
           <h1> i am a top nav bar</h1>
         </div>
-        <div id="imageContainer" wrapped>
-          <Carousel>
-            {this.imgs.map(image => (
-              <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </div>
-        <h1>{property.name}</h1>
-        <h4>
-          {property.location}, {property.postcode}
-        </h4>
-        <h2>About this space</h2>
-        <h4>
-          {property.sleeps} guests • {property.bedrooms} bedrooms •{" "}
-          {property.bathrooms} bathroom
-        </h4>
+        <Card>
+          <div id="imageContainer" wrapped>
+            <Carousel>
+              {this.imgs.map(image => (
+                <Carousel.Item>
+                  <img className="d-block w-100" src={image} alt="slide" />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </div>
+          <Card.Body variant="bottom">
+            <Card.Title style={{ textAlign: "center" }}>
+              {this.state.property.name}
+            </Card.Title>
+            <Card.Text>
+              {moment(this.props.booking.startDate).format("ddd, MMMM Do YYYY")}
+              -{moment(this.props.booking.endDate).format("ddd, MMMM Do YYYY")}
+            </Card.Text>
+          </Card.Body>
+          {/* <Button
+            as={Link}
+            to={"/admin/" + this.props.booking.id}
+            attached="bottom"
+          >
+            <Icon name="plus circle" />
+            Booking Details
+          </Button> */}
+        </Card>
         <br></br>
         <NavBar />
       </div>
@@ -54,4 +66,4 @@ class PropertyShow extends React.Component {
   }
 }
 
-export default PropertyShow;
+export default BookingsListTile;

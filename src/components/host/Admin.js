@@ -1,7 +1,11 @@
 import React from "react";
-import NavBarAdmin from "../common/NavBarAdmin";
+import NavBarAdmin from "./NavBarAdmin";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignInForm from "../common/SignInForm";
+import Bookings from "./Bookings";
+import Properties from "./Properties";
+import api from "../../api.js";
+import HostBookingShow from "./HostBookingShow";
 
 const ProtectedRoute = props => {
   if (
@@ -17,34 +21,52 @@ const ProtectedRoute = props => {
 
 class Admin extends React.Component {
   state = {
-    user: localStorage.hostUser ? JSON.parse(localStorage.user) : null
+    user: null,
+    awaitingValidation: true
+  };
+
+  componentDidMount() {
+    this.validateUser();
+  }
+
+  validateUser = () => {
+    api.hostsValidate().then(data => {
+      if (!data.error) {
+        this.setState({
+          user: data
+        });
+      }
+
+      this.setState({
+        awaitingValidation: false
+      });
+    });
   };
 
   signin = user => {
-    // fetch().then().then()
-
-    const newUser = {
-      ...user,
-      id: 1
-    };
-
-    // localstorage JSON.stringify(user)
-
-    this.setState({
-      user: newUser
+    api.hostSignIn(user).then(user => {
+      this.setState(
+        {
+          user: {
+            ...user
+          }
+        },
+        () => {
+          this.props.history.push("/admin");
+        }
+      );
     });
-
-    this.props.history.push("/admin");
   };
 
-  createProperty = propertyDetails => {
-    // fetch() propertyDetails, this.state.user.id
-  };
+  // createProperty = propertyDetails => {
+  //   // fetch() propertyDetails, this.state.user.id
+  // };
 
   render() {
+    if (this.state.awaitingValidation) return <div>Loading...</div>;
+
     return (
       <div>
-        <h1>This will be the admin area</h1>
         <Switch>
           <Route
             path="/admin/signin"
@@ -53,8 +75,20 @@ class Admin extends React.Component {
           <ProtectedRoute
             location={this.props.location.pathname}
             user={this.state.user}
-            path="/admin/"
-            render={() => <div>here are all of your latest bookings</div>}
+            path="/admin/properties"
+            component={Properties}
+          />
+          <ProtectedRoute
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/admin"
+            component={Bookings}
+          />
+          <ProtectedRoute
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/admin/:id"
+            component={HostBookingShow}
           />
         </Switch>
         <div className="NavBar">

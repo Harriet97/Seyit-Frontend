@@ -1,17 +1,17 @@
 import React from "react";
-import { Button, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 import { Card, Carousel } from "react-bootstrap";
 
-class PropertyListTile extends React.Component {
+import api from "../../api";
+
+class HostPropertyCard extends React.Component {
   imgs = [
     "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
     "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
     "https://react.semantic-ui.com/images/avatar/large/molly.png",
     "https://react.semantic-ui.com/images/avatar/large/jenny.jpg"
   ];
+
   render() {
-    const { name, id } = this.props.property;
     return (
       <Card>
         <div id="imageContainer" wrapped>
@@ -24,20 +24,14 @@ class PropertyListTile extends React.Component {
           </Carousel>
         </div>
         <Card.Body variant="bottom">
-          <Card.Title style={{ textAlign: "center" }}>{name}</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-
-          <Button as={Link} to={"/properties/" + id} attached="bottom">
-            <Icon name="plus circle" />
-            More Info
-          </Button>
+          <Card.Title style={{ textAlign: "center" }}>
+            {this.props.property.name}
+          </Card.Title>
+          <Card.Text>i am a property</Card.Text>
         </Card.Body>
       </Card>
     );
   }
 }
 
-export default PropertyListTile;
+export default HostPropertyCard;

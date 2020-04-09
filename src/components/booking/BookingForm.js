@@ -3,9 +3,6 @@ import { Button } from "semantic-ui-react";
 import NavBar from "../common/Navbar";
 import moment from "moment";
 class BookingForm extends React.Component {
-  email = () => {
-    window.location.href = `mailto:${this.props.email}`;
-  };
   render() {
     // const { start_date, end_date, id } = this.props.match.params;
     return (
@@ -30,13 +27,7 @@ class BookingForm extends React.Component {
           </tr>
         </table>
 
-        <h3>property id:{this.props.match.params.id}</h3>
-        {/* <h3>guest id: {this.props.user.id}</h3> */}
-        <Button
-          onClick={() =>
-            this.props.makeBooking(this.props.match.params).then(this.email)
-          }
-        >
+        <Button onClick={() => this.props.makeBooking(this.props.match.params)}>
           {" "}
           Request to Book
         </Button>
