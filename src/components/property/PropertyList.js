@@ -1,35 +1,34 @@
 import React from "react";
-import NavBar from "../common/Navbar";
 import PropertyListTile from "./PropertyListTile";
-import Fab from "@material-ui/core/Fab";
-import NavigationIcon from "@material-ui/icons/Navigation";
-import { Card } from "semantic-ui-react";
+import { CardGroup } from "react-bootstrap";
 import api from "../../api";
 
 class PropertyList extends React.Component {
   state = {
-    properties: []
+    properties: [],
   };
 
   componentDidMount() {
-    api.getProperties().then(properties => this.setState({ properties }));
+    api.getProperties().then((properties) => this.setState({ properties }));
   }
 
   render() {
     return (
       <div>
         <h1>All of the properties</h1>
-        <Card.Group itemsPerRow={1}>
-          {this.state.properties.map(property => (
-            <PropertyListTile property={property} />
+        <CardGroup className="cards">
+          {this.state.properties.map((property) => (
+            <div>
+              <PropertyListTile
+                property={property}
+                removeGuestFavourite={this.props.removeGuestFavourite}
+                guest={this.props.guest}
+                makeGuestFavourite={this.props.makeGuestFavourite}
+              />
+              <br></br>
+            </div>
           ))}
-        </Card.Group>
-        <div>
-          <Fab size="small" color="primary" aria-label="add">
-            <NavigationIcon />
-          </Fab>
-          <NavBar />
-        </div>
+        </CardGroup>
       </div>
     );
   }

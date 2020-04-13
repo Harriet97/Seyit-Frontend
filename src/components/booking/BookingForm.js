@@ -1,12 +1,12 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
-import NavBar from "../common/Navbar";
+import { Button } from "react-bootstrap";
 import moment from "moment";
+import { Link } from "react-router-dom";
 class BookingForm extends React.Component {
   render() {
     // const { start_date, end_date, id } = this.props.match.params;
     return (
-      <div className="App">
+      <div>
         <h1>Make a booking:</h1>
         <table>
           <tr>
@@ -26,12 +26,13 @@ class BookingForm extends React.Component {
             </td>
           </tr>
         </table>
-
+        <Button as={Link} to={"/properties/" + this.props.match.params.id}>
+          back
+        </Button>
         <Button onClick={() => this.props.makeBooking(this.props.match.params)}>
           {" "}
           Request to Book
         </Button>
-        <NavBar />
       </div>
     );
   }

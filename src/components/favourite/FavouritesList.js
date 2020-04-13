@@ -1,32 +1,37 @@
 import React from "react";
-import NavBar from "../common/Navbar";
 import FavouritesListTile from "../favourite/FavouritesListTile";
-import { Card } from "semantic-ui-react";
+import { CardGroup } from "react-bootstrap";
 import API from "../../api";
 
 class FavouritesList extends React.Component {
   state = {
-    favourites: []
+    favourites: [],
   };
 
   componentDidMount() {
-    API.getGuestFavourites().then(favourites => this.setState({ favourites }));
+    API.getGuestFavourites().then((favourites) =>
+      this.setState({ favourites })
+    );
     // fetch bookings
   }
 
   render() {
     return (
       <div>
-        <h1>Your favourite properties</h1>
-
-        <Card.Group itemsPerRow={1}>
-          {this.state.favourites.map(favourite => (
-            <FavouritesListTile favourite={favourite} />
+        <h2>my favourites</h2>
+        <CardGroup className="cards">
+          {this.state.favourites.map((favourite) => (
+            <div>
+              <FavouritesListTile
+                favourite={favourite}
+                removeGuestFavourite={this.props.removeGuestFavourite}
+                guest={this.props.guest}
+                makeGuestFavourite={this.props.makeGuestFavourite}
+              />
+              <br></br>
+            </div>
           ))}
-        </Card.Group>
-        <div>
-          <NavBar />
-        </div>
+        </CardGroup>
       </div>
     );
   }

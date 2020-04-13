@@ -7,10 +7,13 @@ import FavouritesList from "../favourite/FavouritesList";
 import BookingsList from "../booking/BookingsList";
 import BookingForm from "../booking/BookingForm";
 import PropertyShow from "../property/PropertyShow";
+import GuestAccount from "./GuestAccount";
 import Welcome from "../common/Welcome";
+import BookingShow from "../booking/BookingShow";
 import api from "../../api";
+import Navbar from "./Navbar";
 
-const ProtectedRoute = props => {
+const ProtectedRoute = (props) => {
   if (
     !props.user &&
     props.location !== "/signin" &&
@@ -25,7 +28,7 @@ const ProtectedRoute = props => {
 class Guest extends React.Component {
   state = {
     user: null,
-    awaitingValidation: true
+    awaitingValidation: true,
   };
 
   componentDidMount() {
@@ -33,26 +36,26 @@ class Guest extends React.Component {
   }
 
   validateUser = () => {
-    api.guestsValidate().then(data => {
+    api.guestsValidate().then((data) => {
       if (!data.error) {
         this.setState({
-          user: data
+          user: data,
         });
       }
 
       this.setState({
-        awaitingValidation: false
+        awaitingValidation: false,
       });
     });
   };
 
-  signin = user => {
-    api.guestSignIn(user).then(user => {
+  signin = (user) => {
+    api.guestSignIn(user).then((user) => {
       this.setState(
         {
           user: {
-            ...user
-          }
+            ...user,
+          },
         },
         () => {
           this.props.history.push("/properties");
@@ -61,67 +64,156 @@ class Guest extends React.Component {
     });
   };
 
-  makeBooking = deets => {
+  makeBooking = (deets) => {
     let bookingObj = {
       startDate: deets.start_date,
       endDate: deets.end_date,
       property_id: deets.id,
-      guest_id: this.state.user.id
+      guest_id: this.state.user.id,
     };
+    console.log(bookingObj);
     api.makeBooking(bookingObj).then(this.props.history.push("/bookings"));
   };
 
-  makeFavourite = property => {
-    let favObj = {
-      property_id: property.id,
-      guest_id: this.state.user.id
+  makeGuestFavourite = (property) => {
+    let favouriteObj = {
+      property_id: property,
+      guest_id: this.state.user.id,
     };
-    console.log(favObj);
-    api.makeFavourite(favObj).then(this.props.history.push("/favourites"));
+    api.makeGuestFavourite(favouriteObj);
+  };
+
+  removeGuestFavourite = (property) => {
+    let favouriteObj = {
+      property_id: property,
+      guest_id: this.state.user.id,
+    };
+    console.log(favouriteObj);
+    api.destroyFavourite(favouriteObj);
+  };
+
+  signOut = () => {
+    this.setState(
+      {
+        user: null,
+      },
+      () => {
+        this.props.history.push("/signin");
+      }
+    );
+    localStorage.removeItem("token");
   };
 
   render() {
     if (this.state.awaitingValidation) return <div>Loading...</div>;
 
     return (
-      <Switch>
-        <Route exact path="/" component={() => <Welcome />} />
-        <Route exact path="/properties" component={() => <PropertyList />} />
-        <Route
-          exact
-          path="/signin"
-          component={() => <SignInForm signin={this.signin} />}
-        />
-        <Route exact path="/signup" component={() => <SignUpForm />} />
-        <ProtectedRoute
-          location={this.props.location.pathname}
-          user={this.state.user}
-          path="/favourites"
-          render={props => <FavouritesList {...props} />}
-        />
-        <ProtectedRoute
-          location={this.props.location.pathname}
-          user={this.state.user}
-          path="/bookings"
-          render={props => <BookingsList {...props} />}
-        />
-        <ProtectedRoute
-          location={this.props.location.pathname}
-          user={this.state.user}
-          path="/properties/:id"
-          render={props => (
-            <PropertyShow {...props} makeFavourite={this.makeFavourite} />
-          )}
-        />
-        <ProtectedRoute
-          user={this.state.user}
-          location={this.props.location.pathname}
-          path="/properties/:id/book/:start_date/:end_date"
-          render={props => (
-            <BookingForm {...props} makeBooking={this.makeBooking} />
-          )}
-        />
-      </Switch>
+      <div>
+        <Switch>
+          <Route exact path="/" component={() => <Welcome />} />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/properties"
+            render={(props) => (
+              <PropertyList
+                {...props}
+                removeGuestFavourite={this.removeGuestFavourite}
+                makeGuestFavourite={this.makeGuestFavourite}
+                guest={this.state.user.id}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signin"
+            component={() => <SignInForm signin={this.signin} />}
+          />
+          <Route exact path="/signup" component={() => <SignUpForm />} />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/favourites"
+            render={(props) => (
+              <FavouritesList
+                {...props}
+                removeGuestFavourite={this.removeGuestFavourite}
+                makeGuestFavourite={this.makeGuestFavourite}
+                guest={this.state.user.id}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/bookings"
+            render={(props) => (
+              <BookingsList
+                {...props}
+                removeGuestFavourite={this.removeGuestFavourite}
+                makeGuestFavourite={this.makeGuestFavourite}
+                guest={this.state.user.id}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/bookings/:id"
+            render={(props) => (
+              <BookingShow
+                {...props}
+                removeGuestFavourite={this.removeGuestFavourite}
+                makeGuestFavourite={this.makeGuestFavourite}
+                guest={this.state.user.id}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/properties/:id"
+            render={(props) => (
+              <PropertyShow
+                {...props}
+                removeGuestFavourite={this.removeGuestFavourite}
+                makeGuestFavourite={this.makeGuestFavourite}
+                guest={this.state.user.id}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            user={this.state.user}
+            location={this.props.location.pathname}
+            path="/properties/:id/book/:start_date/:end_date"
+            render={(props) => (
+              <BookingForm {...props} makeBooking={this.makeBooking} />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/account"
+            render={(props) => (
+              <GuestAccount
+                {...props}
+                signOut={this.signOut}
+                guest={this.state.user}
+              />
+            )}
+          />
+        </Switch>
+        <div className="NavBar">
+          <Navbar user={this.state.user} />
+        </div>
+      </div>
     );
   }
 }

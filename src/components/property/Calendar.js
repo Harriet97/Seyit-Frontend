@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
-import { Button } from "semantic-ui-react";
+import { Button } from "react-bootstrap";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
 import { Link } from "react-router-dom";
@@ -11,15 +11,15 @@ const moment = extendMoment(Moment);
 class Calendar extends Component {
   state = {
     startDate: null,
-    endDate: null
+    endDate: null,
   };
 
-  isBlocked = date => {
-    let bookedRanges = this.props.bookings.map(booking =>
+  isBlocked = (date) => {
+    let bookedRanges = this.props.bookings.map((booking) =>
       moment.range(booking.startDate, booking.endDate)
     );
 
-    return bookedRanges.find(range => range.contains(date));
+    return bookedRanges.find((range) => range.contains(date));
   };
 
   render() {
@@ -35,9 +35,9 @@ class Calendar extends Component {
         this.state.endDate.format("YYYY-MM-DD");
     }
 
-    console.log("bookinglink", bookingLink);
+    console.log(bookingLink);
     return (
-      <div className="App">
+      <div>
         <DateRangePicker
           orientation="vertical"
           numberOfMonths="2"
@@ -54,7 +54,7 @@ class Calendar extends Component {
             this.setState({ startDate, endDate })
           }
           focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-          onFocusChange={focusedInput => this.setState({ focusedInput })}
+          onFocusChange={(focusedInput) => this.setState({ focusedInput })}
         />
         <br></br>
 

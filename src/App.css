@@ -1,9 +1,11 @@
-.App {
+.cards {
   /* text-align: center; */
   /* padding-top: 1em; */
-  background-color: white;
+  background-color: rgb(223, 238, 255);
   padding-bottom: 2em;
-  padding-top: 1em;
+  padding-top: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
   font-family: "Roboto", sans-serif;
 }
 
@@ -15,7 +17,7 @@
   height: 40vmin;
 }
 
-.App-header {
+.Welcome {
   background-color: rgb(223, 238, 255);
   min-height: 100vh;
   display: flex;
@@ -33,9 +35,8 @@
   bottom: 0;
   width: 100%;
   max-height: fit-content;
-  z-index: 5;
   background-color: whitesmoke;
-  font-family: "Roboto", sans-serif;
+  z-index: 5;
 }
 
 .NavBarTop {
@@ -44,8 +45,8 @@
   width: 100%;
   max-height: fit-content;
   z-index: 5;
-  background-color: whitesmoke;
-  font-family: "Roboto", sans-serif;
+  background-color: white;
+  font-family: "Inter", sans-serif;
 }
 
 .form {
@@ -70,4 +71,7 @@
 
 table {
   width: 100%;
+}
+ion-icon {
+  font-size: 25px;
 }

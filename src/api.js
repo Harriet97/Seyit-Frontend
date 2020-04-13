@@ -1,5 +1,4 @@
 const baseURL = "http://localhost:3000";
-// const signInURL = `${baseURL}/sign-in`;
 const guestsSignInURL = `${baseURL}/guests/sign-in`;
 const guestsValidateURL = `${baseURL}/guests/validate`;
 const guestsBookingsURL = `${baseURL}/guests/bookings`;
@@ -8,13 +7,12 @@ const hostsSignInURL = `${baseURL}/hosts/sign-in`;
 const hostsValidateURL = `${baseURL}/hosts/validate`;
 const hostsBookingsURL = `${baseURL}/hosts/bookings`;
 const hostsPropertiesURL = `${baseURL}/hosts/properties`;
-// const signUpURL = `${baseURL}/users`;
-// const validateURL = `${baseURL}/validate`;
 const propertiesURL = `${baseURL}/properties`;
 const bookingURL = `${baseURL}/bookings`;
-// const guestURL = `${baseURL}/guests`;
+const guestURL = `${baseURL}/guests`;
+const hostURL = `${baseURL}/hosts`;
 const favouriteURL = `${baseURL}/guest_favourites`;
-const jsonify = response => response.json();
+const jsonify = (response) => response.json();
 
 const get = (url, token) => {
   return token ? fetch(url, { headers: { Authorization: token } }) : fetch(url);
@@ -25,23 +23,23 @@ const post = (url, data) => {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   };
   return fetch(url, configurationObject);
 };
 
 const getProperties = () => fetch(propertiesURL).then(jsonify);
 
-const getProperty = id => {
+const getProperty = (id) => {
   return fetch(`${propertiesURL}/${id}`).then(jsonify);
 };
 
-const guestSignIn = data => {
+const guestSignIn = (data) => {
   return post(guestsSignInURL, data)
     .then(jsonify)
-    .then(data => {
+    .then((data) => {
       if (data.token) localStorage.token = data.token;
       return data;
     });
@@ -57,11 +55,11 @@ const getGuestFavourites = () => {
 const getGuestBookings = () => {
   return get(guestsBookingsURL, localStorage.token).then(jsonify);
 };
-const makeBooking = bookingObj => {
+const makeBooking = (bookingObj) => {
   return post(bookingURL, bookingObj);
 };
 
-const makeGuestFavourite = favouriteObj => {
+const makeGuestFavourite = (favouriteObj) => {
   return post(favouriteURL, favouriteObj);
 };
 
@@ -69,10 +67,10 @@ const makeGuestFavourite = favouriteObj => {
 //   return post(signUpURL, body).then(resp => resp.json());
 // };
 
-const hostSignIn = data => {
+const hostSignIn = (data) => {
   return post(hostsSignInURL, data)
     .then(jsonify)
-    .then(data => {
+    .then((data) => {
       if (data.token) localStorage.host_token = data.token;
       return data;
     });
@@ -87,13 +85,39 @@ const getHostBookings = () => {
   return get(hostsBookingsURL, localStorage.host_token).then(jsonify);
 };
 
+const getHostBooking = (id) => {
+  return get(`${bookingURL}/${id}`, localStorage.host_token).then(jsonify);
+};
+
+const destroyFavourite = (favouriteObj) => {
+  return fetch(`${guestFavouritesURL}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(favouriteObj),
+  });
+};
+
+const getGuest = (id) => {
+  return fetch(`${guestURL}/${id}`).then(jsonify);
+};
+
+const getHost = (id) => {
+  return fetch(`${hostURL}/${id}`).then(jsonify);
+};
+
 export default {
   getHostBookings,
+  getHostBooking,
   getHostProperties,
   getGuestBookings,
   getGuestFavourites,
   getProperties,
   getProperty,
+  getGuest,
+  getHost,
 
   // signUp,
   guestSignIn,
@@ -101,5 +125,6 @@ export default {
   hostSignIn,
   hostsValidate,
   makeBooking,
-  makeGuestFavourite
+  makeGuestFavourite,
+  destroyFavourite,
 };

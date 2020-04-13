@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 class Welcome extends React.Component {
   render() {
     return (
-      <div className="App-header">
+      <div className="Welcome">
         <HomeWorkOutlinedIcon fontSize="large" className="App-logo" />
         <h1>Seyit's Properties</h1>
 

@@ -1,31 +1,34 @@
 import React from "react";
-import NavBar from "../common/Navbar";
 import BookingsListTile from "../booking/BookingsListTile";
-import { Card } from "semantic-ui-react";
+import { CardGroup } from "react-bootstrap";
 import API from "../../api";
 class BookingsList extends React.Component {
   state = {
-    bookings: []
+    bookings: [],
   };
 
   componentDidMount() {
-    API.getGuestBookings().then(bookings => this.setState({ bookings }));
+    API.getGuestBookings().then((bookings) => this.setState({ bookings }));
     // fetch bookings
   }
 
   render() {
-    console.log(this.state.bookings);
     return (
       <div>
         <h1>Your Bookings</h1>
-        <Card.Group itemsPerRow={1}>
-          {this.state.bookings.map(booking => (
-            <BookingsListTile booking={booking} />
+        <CardGroup className="cards">
+          {this.state.bookings.map((booking) => (
+            <div>
+              <BookingsListTile
+                booking={booking}
+                removeGuestFavourite={this.props.removeGuestFavourite}
+                guest={this.props.guest}
+                makeGuestFavourite={this.props.makeGuestFavourite}
+              />
+              <br></br>
+            </div>
           ))}
-        </Card.Group>
-        <div>
-          <NavBar />
-        </div>
+        </CardGroup>
       </div>
     );
   }

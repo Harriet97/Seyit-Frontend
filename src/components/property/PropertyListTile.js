@@ -1,22 +1,22 @@
 import React from "react";
-import { Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { Card, Carousel } from "react-bootstrap";
+import { Card, Carousel, Button } from "react-bootstrap";
 
 class PropertyListTile extends React.Component {
   imgs = [
     "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
     "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
     "https://react.semantic-ui.com/images/avatar/large/molly.png",
-    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg"
+    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
   ];
   render() {
     const { name, id } = this.props.property;
+    console.log(this.props.guest);
     return (
-      <Card>
+      <Card style={{ padding: "3%" }}>
         <div id="imageContainer" wrapped>
           <Carousel>
-            {this.imgs.map(image => (
+            {this.imgs.map((image) => (
               <Carousel.Item>
                 <img className="d-block w-100" src={image} alt="slide" />
               </Carousel.Item>
@@ -30,10 +30,28 @@ class PropertyListTile extends React.Component {
             bulk of the card's content.
           </Card.Text>
 
-          <Button as={Link} to={"/properties/" + id} attached="bottom">
-            <Icon name="plus circle" />
+          <Button as={Link} to={"/properties/" + id} variant="primary" block>
             More Info
           </Button>
+          {this.props.property.guest_favourites
+            .map((fav) => fav.guest_id)
+            .includes(this.props.guest) ? (
+            <Button
+              onClick={() =>
+                this.props.removeGuestFavourite(this.props.property.id)
+              }
+            >
+              <ion-icon name="heart-dislike-outline"></ion-icon>
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                this.props.makeGuestFavourite(this.props.property.id)
+              }
+            >
+              <ion-icon name="heart-outline"></ion-icon>
+            </Button>
+          )}
         </Card.Body>
       </Card>
     );

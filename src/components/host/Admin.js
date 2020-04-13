@@ -1,13 +1,14 @@
 import React from "react";
-import NavBarAdmin from "./NavBarAdmin";
+import NavBar2 from "./NavBar2";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignInForm from "../common/SignInForm";
 import Bookings from "./Bookings";
 import Properties from "./Properties";
 import api from "../../api.js";
 import HostBookingShow from "./HostBookingShow";
+import Account from "./Account";
 
-const ProtectedRoute = props => {
+const ProtectedRoute = (props) => {
   if (
     !props.user &&
     props.location !== "/admin/signin" &&
@@ -22,7 +23,7 @@ const ProtectedRoute = props => {
 class Admin extends React.Component {
   state = {
     user: null,
-    awaitingValidation: true
+    awaitingValidation: true,
   };
 
   componentDidMount() {
@@ -30,37 +31,45 @@ class Admin extends React.Component {
   }
 
   validateUser = () => {
-    api.hostsValidate().then(data => {
+    api.hostsValidate().then((data) => {
       if (!data.error) {
         this.setState({
-          user: data
+          user: data,
         });
       }
 
       this.setState({
-        awaitingValidation: false
+        awaitingValidation: false,
       });
     });
   };
 
-  signin = user => {
-    api.hostSignIn(user).then(user => {
+  signin = (user) => {
+    api.hostSignIn(user).then((user) => {
       this.setState(
         {
           user: {
-            ...user
-          }
+            ...user,
+          },
         },
         () => {
-          this.props.history.push("/admin");
+          this.props.history.push("/admin/bookings");
         }
       );
     });
   };
 
-  // createProperty = propertyDetails => {
-  //   // fetch() propertyDetails, this.state.user.id
-  // };
+  signOut = () => {
+    this.setState(
+      {
+        user: null,
+      },
+      () => {
+        this.props.history.push("/admin/signin");
+      }
+    );
+    localStorage.removeItem("host_token");
+  };
 
   render() {
     if (this.state.awaitingValidation) return <div>Loading...</div>;
@@ -70,29 +79,46 @@ class Admin extends React.Component {
         <Switch>
           <Route
             path="/admin/signin"
+            exact
             render={() => <SignInForm signin={this.signin} />}
           />
           <ProtectedRoute
             location={this.props.location.pathname}
             user={this.state.user}
+            exact
+            path="/admin"
+            render={(props) => (
+              <Account
+                {...props}
+                signOut={this.signOut}
+                user={this.state.user}
+              />
+            )}
+          />
+          <ProtectedRoute
+            location={this.props.location.pathname}
+            user={this.state.user}
+            exact
             path="/admin/properties"
             component={Properties}
           />
           <ProtectedRoute
             location={this.props.location.pathname}
             user={this.state.user}
-            path="/admin"
-            component={Bookings}
+            exact
+            path="/admin/bookings/:id"
+            component={HostBookingShow}
           />
           <ProtectedRoute
             location={this.props.location.pathname}
             user={this.state.user}
-            path="/admin/:id"
-            component={HostBookingShow}
+            exact
+            path="/admin/bookings"
+            component={Bookings}
           />
         </Switch>
         <div className="NavBar">
-          <NavBarAdmin />
+          <NavBar2 user={this.state.user} />
         </div>
       </div>
     );
