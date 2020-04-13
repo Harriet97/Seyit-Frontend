@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import API from "../../api";
 
 class HostBookingShow extends React.Component {
@@ -22,9 +22,18 @@ class HostBookingShow extends React.Component {
     );
   }
 
+  confirmBooking = () => {
+    API.confirmBooking(this.state.booking.id);
+  };
+
+  cancelBooking = () => {
+    console.log("this booking is going to be cancelled");
+  };
+
   render() {
     const { booking } = this.state;
-    if (!this.state.booking) return <div>Loading</div>;
+    if (!this.state.booking)
+      return <Spinner animation="border" variant="info" />;
     if (!this.state.booking.confirmed)
       return (
         <div>
@@ -46,14 +55,17 @@ class HostBookingShow extends React.Component {
           <Button as={Link} to={booking.guest.email}>
             Contact guest
           </Button>
-          <Button> Confirm booking</Button>
+          <Button onClick={() => this.confirmBooking()}>
+            {" "}
+            Confirm booking
+          </Button>
         </div>
       );
     if (this.state.booking.confirmed)
       return (
         <div>
           <h1>this booking has been confirmed</h1>
-          <h3>button to cancel booking</h3>
+          <Button onClick={() => this.cancelBooking()}>Cancel Booking</Button>
         </div>
       );
   }

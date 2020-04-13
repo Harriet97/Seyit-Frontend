@@ -108,6 +108,18 @@ const getHost = (id) => {
   return fetch(`${hostURL}/${id}`).then(jsonify);
 };
 
+const confirmBooking = (id) => {
+  fetch(`${bookingURL}/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      confirmed: true,
+    }),
+  }).then(jsonify);
+};
+
 export default {
   getHostBookings,
   getHostBooking,
@@ -118,6 +130,7 @@ export default {
   getProperty,
   getGuest,
   getHost,
+  confirmBooking,
 
   // signUp,
   guestSignIn,

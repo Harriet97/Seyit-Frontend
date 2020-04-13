@@ -37,7 +37,7 @@ class Calendar extends Component {
 
     console.log(bookingLink);
     return (
-      <div>
+      <div className="calendar">
         <DateRangePicker
           orientation="vertical"
           numberOfMonths="2"
