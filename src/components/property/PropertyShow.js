@@ -64,6 +64,7 @@ class PropertyShow extends React.Component {
           {property.bathtub ? "bath" : null}
           {property.shower ? "shower" : null}
         </h4>
+        <h4> Cost per month: £{property.price}</h4>
         <br></br>
         <h2>Ammenities:</h2>
         <div>
