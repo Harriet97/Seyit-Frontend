@@ -26,8 +26,8 @@ class HostBookingShow extends React.Component {
     API.confirmBooking(this.state.booking.id);
   };
 
-  cancelBooking = () => {
-    console.log("this booking is going to be cancelled");
+  removeBooking = () => {
+    API.destroyBooking(this.state.booking.id);
   };
 
   render() {
@@ -65,7 +65,7 @@ class HostBookingShow extends React.Component {
       return (
         <div>
           <h1>this booking has been confirmed</h1>
-          <Button onClick={() => this.cancelBooking()}>Cancel Booking</Button>
+          <Button onClick={() => this.removeBooking()}>Cancel Booking</Button>
         </div>
       );
   }

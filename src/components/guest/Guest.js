@@ -76,6 +76,10 @@ class Guest extends React.Component {
     api.makeBooking(bookingObj).then(this.props.history.push("/bookings"));
   };
 
+  removeBooking = (booking) => {
+    api.destroyBooking(booking);
+  };
+
   makeGuestFavourite = (property) => {
     let favouriteObj = {
       property_id: property,
@@ -177,9 +181,8 @@ class Guest extends React.Component {
             render={(props) => (
               <BookingShow
                 {...props}
-                removeGuestFavourite={this.removeGuestFavourite}
-                makeGuestFavourite={this.makeGuestFavourite}
                 guest={this.state.user.id}
+                removeBooking={this.removeBooking}
               />
             )}
           />

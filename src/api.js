@@ -89,6 +89,10 @@ const getHostBooking = (id) => {
   return get(`${bookingURL}/${id}`, localStorage.host_token).then(jsonify);
 };
 
+const getGuestBooking = (id) => {
+  return get(`${bookingURL}/${id}`, localStorage.token).then(jsonify);
+};
+
 const destroyFavourite = (favouriteObj) => {
   return fetch(`${guestFavouritesURL}`, {
     method: "DELETE",
@@ -97,6 +101,12 @@ const destroyFavourite = (favouriteObj) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(favouriteObj),
+  });
+};
+
+const destroyBooking = (id) => {
+  return fetch(`${bookingURL}/${id}`, {
+    method: "DELETE",
   });
 };
 
@@ -125,12 +135,14 @@ export default {
   getHostBooking,
   getHostProperties,
   getGuestBookings,
+  getGuestBooking,
   getGuestFavourites,
   getProperties,
   getProperty,
   getGuest,
   getHost,
   confirmBooking,
+  destroyBooking,
 
   // signUp,
   guestSignIn,

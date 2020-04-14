@@ -17,7 +17,7 @@ class FavouritesList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="cardContainer">
         <h2>my favourites</h2>
         <CardGroup className="cards">
           {this.state.favourites.map((favourite) => (

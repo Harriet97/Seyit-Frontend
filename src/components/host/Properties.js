@@ -16,7 +16,7 @@ class Properties extends React.Component {
   render() {
     console.log(this.state.bookings);
     return (
-      <div>
+      <div className="cardContainer">
         <h1>Your properties</h1>
         {this.state.properties.length + " properties"}
         <CardGroup className="cards">

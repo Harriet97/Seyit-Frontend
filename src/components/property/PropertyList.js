@@ -15,7 +15,7 @@ class PropertyList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="cardContainer">
         <h1>All of the properties</h1>
         <Button as={Link} to={"/map"}>
           <ion-icon name="map-outline"></ion-icon>

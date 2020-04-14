@@ -1,5 +1,6 @@
 import React from "react";
 import api from "../../api";
+import { Button } from "react-bootstrap";
 
 class BookingShow extends React.Component {
   state = {
@@ -25,6 +26,10 @@ class BookingShow extends React.Component {
     return (
       <div>
         <h1> I am booking {booking.id} show page</h1>
+        <Button onClick={() => this.props.removeBooking(booking.id)}>
+          {" "}
+          Cancel Booking
+        </Button>
       </div>
     );
   }

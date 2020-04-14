@@ -53,6 +53,7 @@ class BookingForm extends React.Component {
         <Button as={Link} to={"/properties/" + this.props.match.params.id}>
           back
         </Button>
+
         <Button onClick={() => this.props.makeBooking(this.props.match.params)}>
           {" "}
           Request to Book

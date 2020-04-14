@@ -35,7 +35,10 @@
   color: #3b5998;
   font-family: "Work Sans", sans-serif;
 }
-
+.cardContainer {
+  min-height: 100vh;
+  background-color: rgb(223, 238, 255);
+}
 .NavBar {
   position: fixed;
   bottom: 0;

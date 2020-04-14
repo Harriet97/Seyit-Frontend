@@ -15,7 +15,7 @@ class Bookings extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="cardContainer">
         <h1>Your {this.state.bookings.length} bookings</h1>
         <CardGroup className="cards">
           {this.state.bookings.map((booking) => (
