@@ -118,7 +118,11 @@ class PropertyShow extends React.Component {
           favourite
         </Button>
 
-        <Calendar bookings={property.bookings} id={property.id} />
+        <Calendar
+          bookings={property.bookings}
+          id={property.id}
+          property={property}
+        />
         <div id="map">
           <GMap property={property} />
         </div>
