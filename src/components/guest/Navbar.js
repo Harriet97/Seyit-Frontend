@@ -28,7 +28,7 @@ class NavBar extends React.Component {
       <Nav fill variant="pills" style={{ color: "pink" }}>
         <Nav.Item>
           <Nav.Link as={Link} to={"/properties"}>
-            <ion-icon name="search-outline"></ion-icon>{" "}
+            <ion-icon className="navicon" name="search-outline"></ion-icon>{" "}
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>

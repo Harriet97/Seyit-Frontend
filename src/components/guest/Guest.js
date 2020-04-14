@@ -10,6 +10,7 @@ import PropertyShow from "../property/PropertyShow";
 import GuestAccount from "./GuestAccount";
 import Welcome from "../common/Welcome";
 import BookingShow from "../booking/BookingShow";
+import MapView from "../common/MapView";
 import api from "../../api";
 import Navbar from "./Navbar";
 
@@ -143,6 +144,15 @@ class Guest extends React.Component {
                 makeGuestFavourite={this.makeGuestFavourite}
                 guest={this.state.user.id}
               />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            location={this.props.location.pathname}
+            user={this.state.user}
+            path="/map"
+            render={(props) => (
+              <MapView {...props} guest={this.state.user.id} />
             )}
           />
           <ProtectedRoute

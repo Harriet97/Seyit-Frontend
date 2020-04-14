@@ -1,7 +1,8 @@
 import React from "react";
 import PropertyListTile from "./PropertyListTile";
-import { CardGroup } from "react-bootstrap";
+import { CardGroup, Button } from "react-bootstrap";
 import api from "../../api";
+import { Link } from "react-router-dom";
 
 class PropertyList extends React.Component {
   state = {
@@ -16,6 +17,9 @@ class PropertyList extends React.Component {
     return (
       <div>
         <h1>All of the properties</h1>
+        <Button as={Link} to={"/map"}>
+          <ion-icon name="map-outline"></ion-icon>
+        </Button>
         <CardGroup className="cards">
           {this.state.properties.map((property) => (
             <div>

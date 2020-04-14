@@ -14,11 +14,11 @@ class PropertyListTile extends React.Component {
     console.log(this.props.guest);
     return (
       <Card style={{ padding: "3%" }}>
-        <div id="imageContainer" wrapped>
+        <div wrapped>
           <Carousel>
             {this.imgs.map((image) => (
               <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
+                <img className="image" src={image} alt="slide" />
               </Carousel.Item>
             ))}
           </Carousel>

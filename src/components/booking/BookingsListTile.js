@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Carousel } from "react-bootstrap";
 import moment from "moment";
 import API from "../../api";
-import { Button } from "react-bootstrap";
+import { Button, ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class BookingsListTile extends React.Component {
@@ -27,11 +27,11 @@ class BookingsListTile extends React.Component {
     if (!this.state.property) return <div>Loading</div>;
     return (
       <Card style={{ padding: "3%" }}>
-        <div id="imageContainer" wrapped>
+        <div wrapped>
           <Carousel>
             {this.imgs.map((image) => (
               <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
+                <img className="imageBooking" src={image} alt="slide" />
               </Carousel.Item>
             ))}
           </Carousel>
@@ -45,28 +45,42 @@ class BookingsListTile extends React.Component {
             {moment(this.props.booking.endDate).format("ddd, MMMM Do YYYY")}
           </Card.Text>
         </Card.Body>
-        {this.state.property.guest_favourites
-          .map((fav) => fav.guest_id)
-          .includes(this.props.guest) ? (
+        <ButtonGroup>
+          {this.state.property.guest_favourites
+            .map((fav) => fav.guest_id)
+            .includes(this.props.guest) ? (
+            <Button
+              // fluid
+              size="sm"
+              variant="outline-danger"
+              onClick={() =>
+                this.props.removeGuestFavourite(this.props.booking.property_id)
+              }
+            >
+              <ion-icon name="heart-dislike-outline"></ion-icon>
+            </Button>
+          ) : (
+            <Button
+              // fluid
+              size="sm"
+              variant="outline-danger"
+              onClick={() =>
+                this.props.makeGuestFavourite(this.props.booking.property_id)
+              }
+            >
+              <ion-icon name="heart-outline"></ion-icon>
+            </Button>
+          )}
           <Button
-            onClick={() =>
-              this.props.removeGuestFavourite(this.props.booking.property_id)
-            }
+            // fluid
+            variant="outline-primary"
+            as={Link}
+            size="sm"
+            to={"/bookings/" + this.props.booking.id}
           >
-            <ion-icon name="heart-dislike-outline"></ion-icon>
+            <ion-icon name="add-outline"></ion-icon>
           </Button>
-        ) : (
-          <Button
-            onClick={() =>
-              this.props.makeGuestFavourite(this.props.booking.property_id)
-            }
-          >
-            <ion-icon name="heart-outline"></ion-icon>
-          </Button>
-        )}
-        <Button as={Link} to={"/bookings/" + this.props.booking.id}>
-          More info
-        </Button>
+        </ButtonGroup>
       </Card>
     );
   }

@@ -3,6 +3,7 @@ import api from "../../api";
 import Calendar from "./Calendar";
 import { Carousel, Button, Card, Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import GMap from "../common/GMap";
 
 class PropertyShow extends React.Component {
   state = {
@@ -110,13 +111,17 @@ class PropertyShow extends React.Component {
               </Accordion.Collapse>
             </Card>
           </Accordion>
-          <br></br>
         </div>
+
+        <br></br>
         <Button onClick={() => this.props.makeGuestFavourite(property.id)}>
           favourite
         </Button>
 
         <Calendar bookings={property.bookings} id={property.id} />
+        <div id="map">
+          <GMap property={property} />
+        </div>
       </div>
     );
   }
