@@ -11,10 +11,10 @@ class BookingsListTile extends React.Component {
   };
 
   imgs = [
-    "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/molly.png",
-    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
+    "https://llidesign.co.uk/assets/img/slider-img/Notting%20Hill%20-%20Living%20Room.jpg",
+    "https://www.taylorhowes.co.uk/site/wp-content/uploads/2018/01/Cheval-Place_Reception-1-3000x1680.jpg",
+    "https://theresident.wpms.greatbritishlife.co.uk/wp-content/uploads/sites/10/2018/03/interior-designers-Berkeley.jpg",
+    "https://www.kallumsbathrooms.co.uk/wp-content/uploads/2019/03/design_small_bathroom.jpg",
   ];
 
   componentDidMount() {
@@ -29,7 +29,7 @@ class BookingsListTile extends React.Component {
       <Card style={{ padding: "3%" }}>
         <div wrapped>
           <Carousel>
-            {this.imgs.map((image) => (
+            {this.state.property.images.map((image) => (
               <Carousel.Item>
                 <img className="imageBooking" src={image} alt="slide" />
               </Carousel.Item>
@@ -40,7 +40,11 @@ class BookingsListTile extends React.Component {
           <Card.Title style={{ textAlign: "center" }}>
             {this.state.property.name}
           </Card.Title>
-          <Card.Text>
+          <Card.Text style={{ textAlign: "center" }}>
+            {" "}
+            {this.state.property.sleeps} guests • {this.state.property.bedrooms}{" "}
+            bedrooms • {this.state.property.bathrooms} bathroom
+            <br></br>
             {moment(this.props.booking.startDate).format("ddd, MMMM Do YYYY")} -
             {moment(this.props.booking.endDate).format("ddd, MMMM Do YYYY")}
           </Card.Text>

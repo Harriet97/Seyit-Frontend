@@ -17,8 +17,10 @@ class Properties extends React.Component {
     console.log(this.state.bookings);
     return (
       <div className="cardContainer">
-        <h1>Your properties</h1>
-        {this.state.properties.length + " properties"}
+        <h2 style={{ textAlign: "center" }}>
+          my {this.state.properties.length} properties
+        </h2>
+
         <CardGroup className="cards">
           {this.state.properties.map((property) => (
             <div>

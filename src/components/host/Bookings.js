@@ -10,13 +10,15 @@ class Bookings extends React.Component {
 
   componentDidMount() {
     API.getHostBookings().then((bookings) => this.setState({ bookings }));
-    // fetch bookings
   }
 
   render() {
     return (
       <div className="cardContainer">
-        <h1>Your {this.state.bookings.length} bookings</h1>
+        <h2 style={{ textAlign: "center" }}>
+          my {this.state.bookings.length} bookings
+        </h2>
+
         <CardGroup className="cards">
           {this.state.bookings.map((booking) => (
             <div>

@@ -1,6 +1,6 @@
 import React from "react";
 import API from "../../api";
-import { Card, Carousel, Button } from "react-bootstrap";
+import { Card, Carousel, Button, ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class FavouritesListTile extends React.Component {
@@ -8,16 +8,12 @@ class FavouritesListTile extends React.Component {
     property: null,
   };
 
-  imgs = [
-    "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/molly.png",
-    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
-  ];
-
   componentDidMount() {
     API.getProperty(this.props.favourite.property_id).then((property) =>
-      this.setState({ property })
+      this.setState({
+        property: property,
+        favourite: property.guest_favourites,
+      })
     );
   }
 
@@ -28,9 +24,9 @@ class FavouritesListTile extends React.Component {
       <Card style={{ padding: "3%" }}>
         <div id="imageContainer" wrapped>
           <Carousel>
-            {this.imgs.map((image) => (
+            {property.images.map((image) => (
               <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
+                <img className="imageBooking" src={image} alt="slide" />
               </Carousel.Item>
             ))}
           </Carousel>
@@ -46,21 +42,23 @@ class FavouritesListTile extends React.Component {
             {property.bathrooms} bathroom
           </Card.Text>
         </Card.Body>
-        <div>
+        <ButtonGroup>
           {this.state.property.guest_favourites
             .map((fav) => fav.guest_id)
             .includes(this.props.guest) ? (
             <Button
-              onClick={() =>
+              variant="outline-danger"
+              onClick={() => {
                 this.props.removeGuestFavourite(
                   this.props.favourite.property_id
-                )
-              }
+                );
+              }}
             >
               <ion-icon name="heart-dislike-outline"></ion-icon>
             </Button>
           ) : (
             <Button
+              variant="outline-danger"
               onClick={() =>
                 this.props.makeGuestFavourite(this.props.favourite.property_id)
               }
@@ -70,12 +68,13 @@ class FavouritesListTile extends React.Component {
           )}
 
           <Button
+            variant="outline-primary"
             as={Link}
             to={"/properties/" + this.props.favourite.property_id}
           >
-            More Info
+            <ion-icon name="add-outline"></ion-icon>
           </Button>
-        </div>
+        </ButtonGroup>
       </Card>
     );
   }

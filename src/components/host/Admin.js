@@ -7,6 +7,7 @@ import Properties from "./Properties";
 import api from "../../api.js";
 import HostBookingShow from "./HostBookingShow";
 import Account from "./Account";
+import PropertyShow from "./PropertyShow";
 
 const ProtectedRoute = (props) => {
   if (
@@ -101,6 +102,13 @@ class Admin extends React.Component {
             exact
             path="/admin/properties"
             component={Properties}
+          />
+          <ProtectedRoute
+            location={this.props.location.pathname}
+            user={this.state.user}
+            exact
+            path="/admin/properties/:id"
+            component={PropertyShow}
           />
           <ProtectedRoute
             location={this.props.location.pathname}

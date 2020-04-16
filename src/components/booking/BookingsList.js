@@ -15,7 +15,7 @@ class BookingsList extends React.Component {
   render() {
     return (
       <div className="cardContainer">
-        <h1>Your Bookings</h1>
+        <h2 style={{ textAlign: "center" }}>my bookings</h2>
         <CardGroup className="cards">
           {this.state.bookings.map((booking) => (
             <div>

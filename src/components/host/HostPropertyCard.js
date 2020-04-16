@@ -1,22 +1,16 @@
 import React from "react";
-import { Card, Carousel } from "react-bootstrap";
+import { Card, Carousel, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class HostPropertyCard extends React.Component {
-  imgs = [
-    "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/molly.png",
-    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
-  ];
-
   render() {
     return (
       <Card style={{ padding: "3%" }}>
         <div id="imageContainer" wrapped>
           <Carousel>
-            {this.imgs.map((image) => (
+            {this.props.property.images.map((image) => (
               <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
+                <img className="image" src={image} alt="slide" />
               </Carousel.Item>
             ))}
           </Carousel>
@@ -25,7 +19,18 @@ class HostPropertyCard extends React.Component {
           <Card.Title style={{ textAlign: "center" }}>
             {this.props.property.name}
           </Card.Title>
-          <Card.Text>i am a property</Card.Text>
+          <Card.Text style={{ textAlign: "center" }}>
+            {this.props.property.sleeps} guests • {this.props.property.bedrooms}{" "}
+            bedrooms • {this.props.property.bathrooms} bathroom
+          </Card.Text>
+          <Button
+            as={Link}
+            to={"/admin/properties/" + this.props.property.id}
+            variant="outline-primary"
+            block
+          >
+            More Info
+          </Button>
         </Card.Body>
       </Card>
     );

@@ -30,6 +30,7 @@ class Guest extends React.Component {
   state = {
     user: null,
     awaitingValidation: true,
+    fav: false,
   };
 
   componentDidMount() {
@@ -65,27 +66,18 @@ class Guest extends React.Component {
     });
   };
 
-  makeBooking = (deets) => {
-    let bookingObj = {
-      startDate: deets.start_date,
-      endDate: deets.end_date,
-      property_id: deets.id,
-      guest_id: this.state.user.id,
-    };
-    console.log(bookingObj);
-    api.makeBooking(bookingObj).then(this.props.history.push("/bookings"));
-  };
-
-  removeBooking = (booking) => {
-    api.destroyBooking(booking);
-  };
+  // removeBooking = (booking) => {
+  //   api.destroyBooking(booking);
+  // };
 
   makeGuestFavourite = (property) => {
     let favouriteObj = {
       property_id: property,
       guest_id: this.state.user.id,
     };
-    api.makeGuestFavourite(favouriteObj);
+    api
+      .makeGuestFavourite(favouriteObj)
+      .then(this.setState({ fav: !this.state.fav }));
   };
 
   removeGuestFavourite = (property) => {
@@ -94,7 +86,9 @@ class Guest extends React.Component {
       guest_id: this.state.user.id,
     };
     console.log(favouriteObj);
-    api.destroyFavourite(favouriteObj);
+    api
+      .destroyFavourite(favouriteObj)
+      .then(this.setState({ fav: !this.state.fav }));
   };
 
   signOut = () => {
@@ -182,7 +176,7 @@ class Guest extends React.Component {
               <BookingShow
                 {...props}
                 guest={this.state.user.id}
-                removeBooking={this.removeBooking}
+                // removeBooking={this.removeBooking}
               />
             )}
           />
@@ -206,7 +200,7 @@ class Guest extends React.Component {
             location={this.props.location.pathname}
             path="/properties/:id/book/:start_date/:end_date"
             render={(props) => (
-              <BookingForm {...props} makeBooking={this.makeBooking} />
+              <BookingForm {...props} guest={this.state.user.id} />
             )}
           />
           <ProtectedRoute
