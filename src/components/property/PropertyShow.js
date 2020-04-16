@@ -2,20 +2,15 @@ import React from "react";
 import api from "../../api";
 import Calendar from "./Calendar";
 import { Carousel, Button, Card, Accordion } from "react-bootstrap";
+import BathtubOutlinedIcon from "@material-ui/icons/BathtubOutlined";
 import { Link } from "react-router-dom";
 import GMap from "../common/GMap";
 
 class PropertyShow extends React.Component {
   state = {
     property: null,
+    fav: false,
   };
-
-  imgs = [
-    "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/molly.png",
-    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
-  ];
 
   componentDidMount() {
     api
@@ -32,41 +27,84 @@ class PropertyShow extends React.Component {
           <Button as={Link} to={"/properties"} variant="link">
             <ion-icon name="chevron-back"></ion-icon>
           </Button>
+          {this.state.property.guest_favourites
+            .map((fav) => fav.guest_id)
+            .includes(this.props.guest) ? (
+            <Button
+              variant="danger"
+              className="float-right"
+              onClick={() => {
+                this.props.removeGuestFavourite(this.state.property.id);
+                this.setState({ fav: !this.state.fav });
+              }}
+            >
+              <ion-icon
+                style={{ color: "white" }}
+                name="heart-dislike-outline"
+              ></ion-icon>
+            </Button>
+          ) : (
+            <Button
+              className="float-right"
+              onClick={() => {
+                this.props.makeGuestFavourite(this.state.property.id);
+                this.setState({ fav: !this.state.fav });
+              }}
+              variant="danger"
+            >
+              <ion-icon
+                name="heart-outline"
+                style={{ color: "white" }}
+              ></ion-icon>
+            </Button>
+          )}
         </div>
         <div id="imageContainer" wrapped>
           <Carousel>
-            {this.imgs.map((image) => (
+            {property.images.map((image) => (
               <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
+                <img className="imageLarge" src={image} alt="slide" />
               </Carousel.Item>
             ))}
           </Carousel>
         </div>
-        <h1>{property.name}</h1>
-        <h4>
+        <h2 style={{ textAlign: "center" }}>{property.name}</h2>
+        <h5 style={{ textAlign: "center" }}>
           {property.location}, {property.postcode}
-        </h4>
-        <h2>About this space</h2>
-        <h4>
-          {property.sleeps} guests • {property.bedrooms} bedrooms •{" "}
-          {property.bathrooms} bathroom
-        </h4>
-        {property.living_room && !property.balcony ? (
-          <h5> with living room</h5>
-        ) : null}
-        {property.living_room && property.balcony ? (
-          <h5>with living room and balcony</h5>
-        ) : null}
-        {!property.living_room && property.balcony ? (
-          <h5> with balcony</h5>
-        ) : null}
-        <h4>
-          {property.bathtub ? "bath" : null}
-          {property.shower ? "shower" : null}
-        </h4>
-        <h4> Cost per month: £{property.price}</h4>
+        </h5>
         <br></br>
-        <h2>Ammenities:</h2>
+        <h4>About this space:</h4>
+        <h5>
+          <table>
+            <tr>
+              <td style={{ textAlign: "center" }}>
+                <ion-icon name="person-outline"></ion-icon>
+              </td>
+              <td>{property.sleeps} guests</td>
+            </tr>
+            <tr>
+              <td style={{ textAlign: "center" }}>
+                <ion-icon name="bed-outline"></ion-icon>
+              </td>
+              <td>{property.bedrooms} bedrooms</td>
+            </tr>
+            <tr>
+              <td style={{ textAlign: "center" }}>
+                {" "}
+                <BathtubOutlinedIcon fontSize="medium" />
+              </td>
+              <td>{property.bathrooms} bathroom</td>
+            </tr>
+            <tr>
+              <td style={{ textAlign: "center" }}>
+                <ion-icon name="cash-outline"></ion-icon>
+              </td>
+              <td>£{property.price} / month</td>
+            </tr>
+          </table>
+        </h5>
+
+        <h4>Amenities:</h4>
         <div>
           <Accordion>
             <Card>
@@ -77,6 +115,15 @@ class PropertyShow extends React.Component {
                 <Card.Body>
                   {property.wifi ? <li>wifi</li> : null}
                   {property.tv ? <li>tv</li> : null}
+                  {property.living_room && !property.balcony ? (
+                    <h5> living room</h5>
+                  ) : null}
+                  {property.living_room && property.balcony ? (
+                    <h5> living room and balcony</h5>
+                  ) : null}
+                  {!property.living_room && property.balcony ? (
+                    <h5> balcony</h5>
+                  ) : null}
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
@@ -100,6 +147,8 @@ class PropertyShow extends React.Component {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="2">
                 <Card.Body>
+                  {property.bathtub ? <li>Bath</li> : null}
+                  {property.shower ? <li>Shower</li> : null}
                   {property.hairdryer ? <li>Hairdryer</li> : null}
                   {property.bedding ? <li>Bed linen</li> : null}
                   {property.washing_machine ? (
@@ -115,15 +164,13 @@ class PropertyShow extends React.Component {
         </div>
 
         <br></br>
-        <Button onClick={() => this.props.makeGuestFavourite(property.id)}>
-          favourite
-        </Button>
 
         <Calendar
           bookings={property.bookings}
           id={property.id}
           property={property}
         />
+
         <div id="map">
           <GMap property={property} />
         </div>

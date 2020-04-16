@@ -15,18 +15,20 @@ class Account extends React.Component {
     const { host } = this.state;
     if (!host) return <div>Loading...</div>;
     return (
-      <div>
+      <div className="Account">
         <h2> Welcome {host.first_name} </h2>
         <h4>You have {this.props.user.bookings.length} bookings:</h4>
         {this.props.user.bookings.map((booking) => (
           <li>
-            <Link to={"/bookings/" + booking.id}>
+            <Link to={"/admin/bookings/" + booking.id}>
               {moment(booking.startDate).format("MMMM Do YYYY")} -
               {moment(booking.endDate).format("MMMM Do YYYY")}
             </Link>
           </li>
         ))}
-        <Button onClick={() => this.props.signOut()}>Sign out</Button>
+        <Button variant="primary" onClick={() => this.props.signOut()}>
+          Sign out
+        </Button>
       </div>
     );
   }

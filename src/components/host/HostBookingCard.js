@@ -8,12 +8,6 @@ class HostBookingCard extends React.Component {
   state = {
     property: null,
   };
-  imgs = [
-    "https://react.semantic-ui.com/images/avatar/large/daniel.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
-    "https://react.semantic-ui.com/images/avatar/large/molly.png",
-    "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
-  ];
 
   componentDidMount() {
     api
@@ -27,9 +21,9 @@ class HostBookingCard extends React.Component {
       <Card style={{ padding: "3%" }}>
         <div id="imageContainer" wrapped>
           <Carousel>
-            {this.imgs.map((image) => (
+            {this.state.property.images.map((image) => (
               <Carousel.Item>
-                <img className="d-block w-100" src={image} alt="slide" />
+                <img className="imageBooking" src={image} alt="slide" />
               </Carousel.Item>
             ))}
           </Carousel>
@@ -38,22 +32,22 @@ class HostBookingCard extends React.Component {
           <Card.Title style={{ textAlign: "center" }}>
             {this.state.property.name}
           </Card.Title>
-          <Card.Text>
+          <Card.Text style={{ textAlign: "center" }}>
+            {" "}
+            {this.state.property.sleeps} guests • {this.state.property.bedrooms}{" "}
+            bedrooms • {this.state.property.bathrooms} bathroom
+            <br></br>
             {moment(this.props.booking.startDate).format("ddd, MMMM Do YYYY")}-
             {moment(this.props.booking.endDate).format("ddd, MMMM Do YYYY")}
           </Card.Text>
         </Card.Body>
-        <Button as={Link} to={"/admin/bookings/" + this.props.booking.id}>
+        <Button
+          as={Link}
+          to={"/admin/bookings/" + this.props.booking.id}
+          variant="outline-primary"
+        >
           more info
         </Button>
-        {/* <Button
-          as={Link}
-          to={"/admin/" + this.props.booking.id}
-          attached="bottom"
-        >
-          <Icon name="plus circle" />
-          Booking Details
-        </Button> */}
       </Card>
     );
   }
