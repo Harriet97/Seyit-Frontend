@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:3000";
+const baseURL = "https://seyit.herokuapp.com";
 const guestsSignInURL = `${baseURL}/guests/sign-in`;
 const guestsValidateURL = `${baseURL}/guests/validate`;
 const guestsBookingsURL = `${baseURL}/guests/bookings`;

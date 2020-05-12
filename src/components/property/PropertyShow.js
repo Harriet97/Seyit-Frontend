@@ -116,13 +116,13 @@ class PropertyShow extends React.Component {
                   {property.wifi ? <li>wifi</li> : null}
                   {property.tv ? <li>tv</li> : null}
                   {property.living_room && !property.balcony ? (
-                    <h5> living room</h5>
+                    <li> living room</li>
                   ) : null}
                   {property.living_room && property.balcony ? (
-                    <h5> living room and balcony</h5>
+                    <li> living room and balcony</li>
                   ) : null}
                   {!property.living_room && property.balcony ? (
-                    <h5> balcony</h5>
+                    <li> balcony</li>
                   ) : null}
                 </Card.Body>
               </Accordion.Collapse>

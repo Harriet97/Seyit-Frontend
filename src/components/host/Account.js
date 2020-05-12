@@ -26,6 +26,7 @@ class Account extends React.Component {
             </Link>
           </li>
         ))}
+        <br></br>
         <Button variant="primary" onClick={() => this.props.signOut()}>
           Sign out
         </Button>
