@@ -1,7 +1,7 @@
 ## Seyit - link
 Backend repository - https://github.com/Harriet97/Seyit-Backend
 
-Seyit is an app that lets you look at select properties  in London and find out which are available to rent for short-term stays. After the welcome screen, users are immediately prompted to create an account and log in. If a user is not logged in and tries to save a property they will be prompted to log in or continue without saving. User details are saved in brower session. Users can save properties to their favourites list.
+Seyit is an app that allows users browse through select properties in London and find out which are available to rent for short-term stays. After the welcome screen, users are immediately prompted to create an account and log in. If a user is not logged in and tries to favourite a property they will be prompted to log in. User details are saved in brower session. Users can save properties to their favourites list.
 Users can make bookings on each property
 
 ## Installation:
@@ -13,9 +13,8 @@ Users can make bookings on each property
 ## Usage:
 Add steps for how to use the project once the user has installed it. Make sure to include usage examples
 
-## Languages, Frameworks and APIs
-  Backend: Ruby, Ruby on Rails, PostgreSQL, BCrypt <br />
-  Frontend: JavaScript, React.js, React-router, Semantic UI, CSS, Bootstrap <br />
-  APIs: <br />Restaurant Database - https://developers.zomato.com/ 
-         <br />Google Maps - https://developers.google.com/maps/documentation
+## Languages, Frameworks & APIs
+  Backend: Ruby, Ruby on Rails, PostgreSQL, JWT, BCrypt <br />
+  Frontend: JavaScript, React.js, React-router, Semantic UI, CSS, Bootstrap, Cloudinary, moment-range, react-dates <br />
+  APIs:  <br />Google Maps - https://developers.google.com/maps/documentation
 
