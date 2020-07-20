@@ -1,4 +1,4 @@
-## Seyit - link
+## Advantage Properties
 Backend repository - https://github.com/Harriet97/Seyit-Backend
 
 Seyit is an app that allows users browse through select properties in London and find out which are available to rent for short-term stays. After the welcome screen, users are immediately prompted to create an account and log in. If a user is not logged in and tries to favourite a property they will be prompted to log in. User details are saved in brower session. Users can save properties to their favourites list.
